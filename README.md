@@ -46,9 +46,10 @@ O Criador desse script frequenta o o grupos de LibreOffice
 https://t.me/libreofficebr
 
 https://t.me/libreofficebrasil
+
 Escreve no blog http://alfabech.com
-pode ser contactado no telegram por 
-@marcosferreira
+
+pode ser contactado no telegram por  @marcosferreira
 
 
 ## Sobre o LibreOffice
