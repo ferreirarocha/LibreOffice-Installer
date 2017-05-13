@@ -19,17 +19,28 @@ Os dois scripts, contam com a possibilidade de baixar o LibreOffice de um servid
 
 ## Testado em
 OpenSuse      32 e 64 Bits
+
 Fedora        32 e 64 Bits
+
 Debian        32 e 64 Bits
+
 Ubuntu        32 e 64 Bits
-Lubuntu       32 e 64 Bits  
+
+Lubuntu       32 e 64 Bits 
+
 Xubuntu       32 e 64 Bits
+
 LinuxMint     32 e 64 Bits
+
 Linux Deepin  32 e 64 Bits
+
 
 ## Sobre o criador do script
 O Criador desse script frequenta o o grupos de LibreOffice
-https://t.me/libreofficebr  e https://t.me/libreofficebrasil
+https://t.me/libreofficebr
+
+https://t.me/libreofficebrasil
+
 pode ser contactado por @marcosferreira
 
 ## Sobre o LibreOffice
