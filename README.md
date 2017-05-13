@@ -1,0 +1,18 @@
+# install-libreoffice
+
+O LibreOffice  é oferecido pela TDF | The Document Fundation
+https://www.documentfoundation.org/
+
+O https://pt-br.libreoffice.org é o portal da comunidade Brasileira.
+
+Este script baixa e instala o LibreOffice Estável ou Novo, também conhecidos como Still e Fresh diretamente dos repositórios oficiais.
+A lista pode ser extendida ou alterada de acordo com a sua necessidade, para ambientes  corporativos sugerimos a criação de 
+um repositórios local para o LibreOffice,  assim como neste script.
+
+
+Convidamo-lo a visitar a  página do projeto ( LibreOffice ).
+
+http://www.libreoffice.org/ 
+
+
+
