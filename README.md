@@ -30,7 +30,7 @@ Lubuntu       32 e 64 Bits
 
 Xubuntu       32 e 64 Bits
 
-LinuxMint     32 e 64 Bits
+Linux Mint     32 e 64 Bits
 
 Linux Deepin  32 e 64 Bits
 
