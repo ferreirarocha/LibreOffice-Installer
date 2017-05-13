@@ -49,8 +49,9 @@ https://t.me/libreofficebrasil
 
 Escreve no blog http://alfabech.com
 
-pode ser contactado no telegram por  @marcosferreira
+pode ser contactado no telegram por  
 
+https://telegram.me/ferreirarocha
 
 ## Sobre o LibreOffice
 O LibreOffice  é oferecido pela TDF | The Document Fundation
