@@ -4,7 +4,7 @@
 exec >& >(tee -a /tmp/-logupdatelibreoffice.txt)
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 # You must place file "COPYING" in same folder of this script.
-FILE="/home/marcos/LibreOffice_Install_V2/tmp/installibreoffice/Instalador/bkp/aviso"
+FILE="curl https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso"
 
 zenity --text-info --width=450 --height=500 \
        --title="Licença" \
