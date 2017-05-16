@@ -309,5 +309,5 @@ if [ "$value" -gt "$value2" ];
        fi
         
 else 
-    echo "você tem a versão mais atual" > /var/log/backup.log
+    sudo echo -s "você tem a versão mais atual" > /var/log/backup.log
 fi
