@@ -4,11 +4,15 @@
 exec >& >(tee -a /tmp/-logupdatelibreoffice.txt)
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 # You must place file "COPYING" in same folder of this script.
-FILE="curl https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso"
+#FILE=https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso
 
-zenity --text-info --width=450 --height=500 \
-       --title="Licença" \
-       --filename=$FILE \
+#zenity --text-info  --html  --width=450 --height=500 \
+#       --title="Licença" \
+#       --filename=$FILE \
+#       --checkbox="Eu lí os termos e aceito."
+zenity --text-info --html --width=800 --height=600 \
+       --title="Sobre o LibreOffice" \
+       --url=https://pt-br.libreoffice.org/
        --checkbox="Eu lí os termos e aceito."
 
 case $? in
@@ -358,13 +362,9 @@ case $? in
                               fi
    ;;
     1)
-        echo "Stop installation!"
+        echo "Instalação Cancelada!"
 	;;
     -1)
-        echo "An unexpected error has occurred."
+        echo "Algo inesperado ocorreu."
 	;;
 esac
-
-else 
-    echo "você tem a versão mais atual" > /var/log/backup.log
-fi
