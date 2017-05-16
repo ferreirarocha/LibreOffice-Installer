@@ -198,21 +198,21 @@ if [ "$value" -gt "$value2" ];
                                                                 if  [ -e "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz ]
                                                                     then
                                                                      if [ -e /usr/bin/yum  ]; then
-                                                                      sudo -S  yum remove openoffice* libreoffice* -y
+                                                                      sudo -S  yum remove openoffice[0-9]* libreoffice[0-9]* -y
 
                                                                      elif [ -e /usr/bin/zypper  ]; then
-                                                                      sudo -S  zypper -n remove libreoffice*
+                                                                      sudo -S  zypper -n remove libreoffice[0-9]*
                                                                     
                                                                     elif [ -e /usr/bin/zypper ]; then
-                                                                      sudo -S zypper -n remove openoffice*
+                                                                      sudo -S zypper -n remove openoffice[0-0]*
 
                                                                      elif [ -e /usr/bin/dpkg  ]; then
-                                                                     sudo -S  apt-get remove --purge libreoffice* -y  
+                                                                     sudo -S  apt-get remove --purge libreoffice[0-9]* -y  
 
                                                                     else
                                                                         exit 1  
                                                                     fi
-                                                                    
+                                                                     
                     # 9                                             # Descompactando os pacotes Libre Office
                                                                        notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Extraindo pacotes !'         
 
