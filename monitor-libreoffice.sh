@@ -47,33 +47,6 @@ if [ "$value" -gt "$value2" ];
                     #   "http://mirror.unesp.br/tdf"                    "Mirror Unesp" 
                     # "192.168.50.122/tdf"                              "Servidor Local "  
 
-
-                    #3 Testando  o gernciador de pacotes"
-
-                            if   [ -e /usr/bin/rpm ]; then
-                                    gerenciadorPacote=rpm
-                                    diretorio=RPMS
-                            else  
-                                    gerenciadorPacote=deb
-                                    diretorio=DEBS
-                            fi
-
-                    #4 Testando  Arquitetura do desktop"
-
-                            if [ `getconf LONG_BIT` = "64" ];
-                            then
-                                 plafatorma=x86_64
-                                 plafatorma2=x86-64
-                            else
-                                plafatorma=x86
-                                plafatorma2=x86
-                            fi
-
-                    #5 Escolhendo o idioma local
-                    servidor="http://tdf.c3sl.ufpr.br"
-                    versaostatus="stable"
-                    vs=`cat libreoffice-ultima-versao`
-                    idioma="pt-BR"
                     #                       "Lista de idiomas diposniveis
 
                     #                       "pt-BR" "Portuguese (Brazil)" 
@@ -163,7 +136,38 @@ if [ "$value" -gt "$value2" ];
 
 
                         
-                    notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Iniciar Instalação !'    
+                    notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Iniciar Instalação !' 
+
+
+
+
+                    #3 Testando  o gernciador de pacotes"
+
+                            if   [ -e /usr/bin/rpm ]; then
+                                    gerenciadorPacote=rpm
+                                    diretorio=RPMS
+                            else  
+                                    gerenciadorPacote=deb
+                                    diretorio=DEBS
+                            fi
+
+                    #4 Testando  Arquitetura do desktop"
+
+                            if [ `getconf LONG_BIT` = "64" ];
+                            then
+                                 plafatorma=x86_64
+                                 plafatorma2=x86-64
+                            else
+                                plafatorma=x86
+                                plafatorma2=x86
+                            fi
+
+                    #5 Escolhendo o idioma local
+                    servidor="http://tdf.c3sl.ufpr.br"
+                    versaostatus="stable"
+                    vs=`cat libreoffice-ultima-versao`
+                    idioma="pt-BR"
+                       
 
 
 
