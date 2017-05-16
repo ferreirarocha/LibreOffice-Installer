@@ -12,7 +12,7 @@ export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr
 #       --checkbox="Eu lí os termos e aceito."
 zenity --text-info --html --width=800 --height=600 \
        --title="Sobre o LibreOffice" \
-       --url="https://pt-br.libreoffice.org"\
+       --url="http://pt-br.libreoffice.org"\
        --checkbox="Eu lí os termos e aceito."
 
 case $? in
