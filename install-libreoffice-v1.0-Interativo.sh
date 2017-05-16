@@ -12,7 +12,7 @@ export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr
 #       --checkbox="Eu lí os termos e aceito."
 zenity --text-info --html --width=800 --height=600 \
        --title="Sobre o LibreOffice" \
-       --url="http://pt-br.libreoffice.org"\
+       --url="https://pt-br.libreoffice.org"\
        --checkbox="Eu lí os termos e aceito."
 
 case $? in
@@ -142,6 +142,26 @@ case $? in
                           while true
                           do
                               resp=$(zenity --password --text "Insira a sua senha" --title "Autenticação")
+
+                              
+                                 if   [ -e /usr/bin/rpm ]; then
+                                       gerenciadorPacote=rpm
+                                       diretorio=RPMS
+                                   else  
+                                       gerenciadorPacote=deb
+                                       diretorio=DEBS
+                                 fi
+
+                              #4 Testando  Arquitetura do desktop"
+
+                                 if [ `getconf LONG_BIT` = "64" ]
+                                 then
+                                      plafatorma=x86_64
+                                    plafatorma2=x86-64
+                                 else
+                                   plafatorma=x86
+                                   plafatorma2=x86
+                                 fi
 
                               # Pega a senha do login gráfico
                               senha=$(echo "$resp" | cut -f1 -d'|')
@@ -310,7 +330,7 @@ case $? in
 
                                                                           ) |      
                                                                                       zenity --progress --width=250 --height=100 \
-                                                                                        --title="Instalando LibreOffice" \
+                                                                                        --title="Instalado LibreOffice" \
                                                                                         --text="Iniciando..." \
                                                                                         --percentage=0
 
@@ -333,7 +353,7 @@ case $? in
                                                          zenity --question --text="Instalar o Monitor de Atualização" --ok-label="Sim" --cancel-label="Não"
                                                          if [ $? = 0 ] ; then
                                                           
-                                                          wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/monitor-libreoffice.sh -P /usr/bin/
+                                                          sudo -s wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/monitor-libreoffice.sh -P /usr/bin/
                                                           
                                                           sudo -S chmod +x   /usr/bin/monitor-libreoffice.sh
                                                           
