@@ -310,7 +310,7 @@ case $? in
 
                                                                           ) |      
                                                                                       zenity --progress --width=250 --height=100 \
-                                                                                        --title="Instalado LibreOffice" \
+                                                                                        --title="Instalando LibreOffice" \
                                                                                         --text="Iniciando..." \
                                                                                         --percentage=0
 
