@@ -348,7 +348,7 @@ case $? in
 
                                done                   
                                       
-
+                                    exit 0
 
                               else
                                   exit 0
