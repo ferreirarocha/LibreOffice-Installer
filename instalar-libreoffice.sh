@@ -3,7 +3,7 @@
 exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffice.log)
 #exec >& >(tee -a /tmp/$(date)install-libreoffice.txt)
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
-wget -c https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso -p /tmp/
+wget -c https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso -P /tmp/
 # You must place file "COPYING" in same folder of this script.
 FILE=/tmp/aviso
 
