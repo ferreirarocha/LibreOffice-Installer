@@ -333,7 +333,7 @@ case $? in
                                                          
                                                          zenity --question --text="Instalar o Monitor de Atualização" --ok-label="Sim" --cancel-label="Não"
                                                          if [ $? = 0 ] ; then
-                                                          mkdir /home/marcos/TESTELOIBRE
+                                                          
                                                           wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/monitor-libreoffice.sh -P /usr/bin
                                                           
                                                           chmod +x   /usr/bin/monitor-libreoffice.sh
