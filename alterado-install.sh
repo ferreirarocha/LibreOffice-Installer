@@ -338,10 +338,10 @@ case $? in
                                                           
                                                           sudo -S chmod +x   /usr/bin/monitor-libreoffice.sh
                                                           
-                                                          (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab - 
+                                                          (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab - ; exit 0
 
-                                                          (( $? == 1 )) && 
-                                                          
+                                                          (( $?  )) &&  exit 
+
 
                                                       else
                                                         exit 0
