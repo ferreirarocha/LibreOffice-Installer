@@ -1,4 +1,12 @@
 #!/bin/bash 
+#Autor: Marcos Ferreira da Rocha
+#Email: marcos.fr.rocha@gmail.com
+#Blog:  alfabech.com
+#Onde o econtra, Grupo de LibreOffice no Telegram https://t.me/libreofficebr, https://t.me/libreofficebrasil
+#Versão: 1.0 
+#Ano: 18 de Maio 2017
+
+
 exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffice.log)
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 #Baixando a arquivo de aviso sobre o script
@@ -15,7 +23,7 @@ export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr
           else
                 zenity --text-info --html --width=800 --height=600 \
                 --title="Sobre o LibreOffice" \
-                --url=alfabech.com  
+                --url=http://pt-br.libreoffice.org
 
           fi  
 case $? in
@@ -145,7 +153,7 @@ case $? in
                                       echo "1" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
                                       # Passa a senha
-                                      echo $senha | sudo -S -u root zenity --info --text "Iniciar instalação \n salve os trabalhos aberto no libreoffice e clique em OK" 
+                                      echo $senha | sudo -S -u root zenity --info --text "Iniciando instalação \n Salve os trabalhos aberto no libreoffice e clique em OK" 
                                       
                                       if ! [ -e /usr/bin/notify-send  ]; then
                                           
@@ -343,7 +351,6 @@ case $? in
                                                   else
                                                     exit 0
                                                   fi
-
                           done                   
                              exit 0                 
                     else
