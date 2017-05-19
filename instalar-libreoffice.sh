@@ -1,10 +1,11 @@
 #!/bin/bash 
 
 exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffice.log)
-#exec >& >(tee -a /tmp/$(date)install-libreoffice.txt)
+
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
+#Baixando a arquivo de aviso sobre o script
 wget -c https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso -P /tmp
-# You must place file "COPYING" in same folder of this script.
+
 FILE=/tmp/aviso
 
 #zenity --text-info  --html  --width=450 --height=500 \
@@ -14,12 +15,12 @@ FILE=/tmp/aviso
 zenity --text-info --width=800 --height=600 \
        --title="Sobre o LibreOffice" \
        --filename=$FILE \		
-       #--checkbox="Eu lí os termos e aceito."
+
 
 case $? in
     0)
         echo "Iniciar Instalação!"
-	# next step
+	# próximo passo
 	           versaostatus="stable"
 
              ## Escolhendo a versão do LibreOffice
@@ -41,11 +42,7 @@ case $? in
                 FALSE http://tdf.ufes.br "Mirror UFES"  \
                 FALSE 192.168.0.193/tdf  "Servidor Local" )   
 
-
-
-
              #3 Testando  o gernciador de pacotes"
-
                 if   [ -e "/bin/rpm" ]; then
                     gerenciadorPacote=rpm
                     diretorio=RPMS
@@ -53,9 +50,7 @@ case $? in
                     gerenciadorPacote=deb
                     diretorio=DEBS
                 fi
-
              #4 Testando  Arquitetura do desktop"
-
                 if [ `getconf LONG_BIT` = "64" ]
                 then
                    plafatorma=x86_64
@@ -66,8 +61,6 @@ case $? in
                 fi
 
              #5 Escolhendo o idioma local
-
-
               idioma=$(zenity --list  --radiolist --width=450 --height=500 \
                --title="Escolha os defeitos que deseja ver" \
                --column="Seleção" --column="Cod. Idioma" --column="Idioma" \
@@ -139,24 +132,18 @@ case $? in
                         if [ $status = 0 ]
                         then
 
-
                           while true
                           do
                               resp=$(zenity --password --text "Insira a sua senha" --title "Autenticação")
 
-
-
                               # Pega a senha do login gráfico
                               senha=$(echo "$resp" | cut -f1 -d'|')
-
                                       (
                                       echo "1" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
                                       # Passa a senha
                                       echo $senha | sudo -S -u root zenity --info --text "Vamos começar a instalação" 
-
-                               
-                                                                          
+                                                                                                    
                                       echo "5" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
                                       # Criando diretório para  baixar os pacotes de acordo como versão, gerenciador, arquitetura
@@ -170,7 +157,6 @@ case $? in
                                       echo "10" ; sleep 1
                                       echo "# Baixando o pacote principal" ; sleep 1       
                                       wget -c "$servidor"/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz  -P "$destino" 
-
 
                                       echo "20" ; sleep 1
                                       echo "# Baixando o pacote de ajuda" ; sleep 1       
@@ -287,7 +273,6 @@ case $? in
                                       exit 1  
                                       fi  
                                                                                   
-
 #15                                       # Tratando os arquivos utilizados, no momento enviando para um subdiretório do Downloads
                                                                          
                                           echo "100" ; sleep 1
@@ -303,7 +288,7 @@ case $? in
                                        1 2>/dev/null && exit
 
                                       ) |      
-                                        zenity --progress --pulsate  --time-remaining --width=250 --height=100 \
+                                        zenity --progress --pulsate  --width=250 --height=100 \
                                                  --title="Instalado LibreOffice" \
                                                  --text="Iniciando..." \
                                                  --percentage=0
@@ -312,8 +297,7 @@ case $? in
                                               zenity --error \
                                                  --text="Instalação cancelada."
                                             fi
-                                               
-               
+                                                              
                                         zenity --question --default-cancel --no-wrap --text 'LibreOffice instalado ! \n Clique em Prosseguir para ativar o monitor de atualização. \n Ou Sair se não quiser ativá-lo' --ok-label="Sair" --cancel-label="OK"
                                             # Sair se pressionou cancelar.
                                               (( $? == 1 )) && 
