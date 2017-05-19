@@ -4,18 +4,19 @@ exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffi
 
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 #Baixando a arquivo de aviso sobre o script
-wget -c https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso -P /tmp
+if [ -e /usr/bin/dnf  ]; then
+    wget -c https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso -P /tmp
 
-FILE=/tmp/aviso
+    FILE=/tmp/aviso
+    zenity --text-info --width=800 --height=600 \
+           --title="Sobre o LibreOffice" \
+           --filename=$FILE \   
+else
 
-#zenity --text-info  --html  --width=450 --height=500 \
-#       --title="Licença" \
-#       --filename=$FILE \
-#       --checkbox="Eu lí os termos e aceito."
-zenity --text-info --width=800 --height=600 \
+zenity --text-info  --html  --width=800 --height=600 \
+       --url=http://pt-br.libreoffice.org \
        --title="Sobre o LibreOffice" \
-       --filename=$FILE \		
-
+fi
 
 case $? in
     0)
@@ -25,25 +26,28 @@ case $? in
 
              ## Escolhendo a versão do LibreOffice
              vs=$(zenity --entry --title="Insira a Versao" --text="versão:")
-             statussaida=$?
-	     if [ $? == 1 ]; then		
-		exit
-	     fi
+	        if [ $? == 0 ]; then		
+		      
+	     
 
              #2 Aqui voĉe pode  inserir  uma lista de seus servidoes preferênciais para baixar o LibreOFfice, com a possiblidies de inserir  um servidor local, ideal para  ambientes  empresariais
               #Nesse caso utilizei o servidor em minha rede com o IP 192.168.0.193/tdf     
 
-             servidor=$(zenity --list  --radiolist --width=450 --height=500 \
-              --title="Escolha os defeitos que deseja ver" \
-              --column="Seleção" --column="Cod. Idioma" --column="Idioma" \
-                TRUE  http://tdf.c3sl.ufpr.br "UFPR" \
-                FALSE http://linorg.usp.br/LibreOffice "USP"  \
-                FALSE http://ftp.unicamp.br/pub "UNICAMP"  \
-                FALSE http://mirror.pop-sc.rnp.br/mirror/tdf  "Pop-sc"  \
-                FALSE http://mirror.nexcess.net/tdf "Mirror Nexcess"  \
-                FALSE http://mirror.ufms.br/tdf "Mirror UFMS"  \
-                FALSE http://tdf.ufes.br "Mirror UFES"  \
-                FALSE 192.168.0.193/tdf  "Servidor Local" )   
+            servidor=$(zenity --list --radiolist --width=450 --height=400 \
+            --title="Escolha o servidor  espelho" \
+            --text="Selecione o servidor para realizar o download  dos pacotes do LibreOffice"  \
+            --column="Seleção" --column="Link" --column="Instituição" \
+              TRUE  http://tdf.c3sl.ufpr.br "UFPR" \
+              FALSE http://linorg.usp.br/LibreOffice "USP"  \
+              FALSE http://ftp.unicamp.br/pub "UNICAMP"  \
+              FALSE http://mirror.pop-sc.rnp.br/mirror/tdf  "Pop-SC"  \
+              FALSE http://mirror.nexcess.net/tdf "Mirror Nexcess"  \
+              FALSE http://mirror.ufms.br/tdf "Mirror UFMS"  \
+              FALSE http://tdf.ufes.br "Mirror UFES"  \
+              FALSE 192.168.0.193/tdf  "Servidor Local" )
+
+            if [ $? == 0 ]; then       
+
 
              #3 Testando  o gernciador de pacotes"
                 if   [ -e "/bin/rpm" ]; then
@@ -64,7 +68,7 @@ case $? in
                 fi
 
              #5 Escolhendo o idioma local
-              idioma=$(zenity --list  --radiolist --width=450 --height=500 \
+              idioma=$(zenity --list --radiolist --width=450 --height=500 \
                --title="Escolha os defeitos que deseja ver" \
                --column="Seleção" --column="Cod. Idioma" --column="Idioma" \
                  TRUE  pt-BR  "Portuguese (Brazil)"  \
@@ -145,7 +149,7 @@ case $? in
                                       echo "1" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
                                       # Passa a senha
-                                      echo $senha | sudo -S -u root zenity --info --text "Vamos começar a instalação" 
+                                      echo $senha | sudo -S -u root zenity --info --text "Iniciar instalação \n salve os trabalhos aberto no libreoffice e clique em OK" 
                                                                                                     
                                       echo "5" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
@@ -168,7 +172,6 @@ case $? in
 #7                                    # Testando se há necessidade de baixar o pacote idioma, no caso do idioma inglÊs não há necessidade. 
                                        if  ! [  "$idioma" = "en-US" ]
                                              then
-
                                                   echo "30" ; sleep 1
                                                   echo "# Baixando o pacote de idioma" ; sleep 1 
                                                   wget -c "$servidor"/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote"_langpack_"$idioma".tar.gz   -P "$destino" 
@@ -322,13 +325,17 @@ case $? in
                                                   fi
 
                           done                   
-                                      
-                            exit 0
-
-                        else
-                          exit 0
-                        fi
-			
+                             exit 0                 
+                    else
+                      exit 0
+                    fi
+            else                                      
+              exit 0            
+            fi       
+                        
+			  else
+          exit 0
+        fi
    ;;   
     1)
         echo "Instalação Cancelada!"
