@@ -321,7 +321,7 @@ case $? in
                                         zenity --question --text="Instalar o Monitor de Atualização" --ok-label="Sim" --cancel-label="Não"
                                                   if [ $? = 0 ] ; then
                                                        
-                                                    sudo -S wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/monitor-libreoffice.sh -P /usr/bin
+                                                    sudo -S wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/monitor-libreoffice.sh -P /usr/bin/monitor-libreoffice.sh
                                                          
                                                     sudo -S chmod +x   /usr/bin/monitor-libreoffice.sh
                                                        
