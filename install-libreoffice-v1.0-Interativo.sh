@@ -1,63 +1,70 @@
 #!/bin/bash 
+#Autor: Marcos Ferreira da Rocha
+#Email: marcos.fr.rocha@gmail.com
+#Blog:  alfabech.com
+#Onde o econtra, Grupo de LibreOffice no Telegram https://t.me/libreofficebr, https://t.me/libreofficebrasil
+#Versão: 1.0 
+#Ano: 18 de Maio 2017
 
 
-exec >& >(tee -a /tmp/-logupdatelibreoffice.txt)
+exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffice.log)
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
-# You must place file "COPYING" in same folder of this script.
-#FILE=https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso
+#Baixando a arquivo de aviso sobre o script
 
-#zenity --text-info  --html  --width=450 --height=500 \
-#       --title="Licença" \
-#       --filename=$FILE \
-#       --checkbox="Eu lí os termos e aceito."
-zenity --text-info --html --width=800 --height=600 \
-       --title="Sobre o LibreOffice" \
-       --url="https://pt-br.libreoffice.org"\
-       --checkbox="Eu lí os termos e aceito."
 
+          if [ -e /usr/bin/dnf  ]; then
+
+                wget -c https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso -P /tmp
+                FILE=/tmp/aviso
+                zenity --text-info --width=800 --height=600 \
+                --title="Sobre o LibreOffice" \
+                --filename=$FILE  
+               
+          else
+                zenity --text-info --html --width=800 --height=600 \
+                --title="Sobre o LibreOffice" \
+                --url=http://pt-br.libreoffice.org
+
+          fi  
 case $? in
     0)
-        echo "Start installation!"
-	# next step
+        echo "Iniciar Instalação!"
+	# próximo passo
 	           versaostatus="stable"
 
              ## Escolhendo a versão do LibreOffice
              vs=$(zenity --entry --title="Insira a Versao" --text="versão:")
-             statussaida=$?
-
+	        if [ $? == 0 ]; then		     
              #2 Aqui voĉe pode  inserir  uma lista de seus servidoes preferênciais para baixar o LibreOFfice, com a possiblidies de inserir  um servidor local, ideal para  ambientes  empresariais
-              #Nesse caso utilizei o servidor em minha rede com o IP 192.168.50.122/tdf     
+              #Nesse caso utilizei o servidor em minha rede com o IP 192.168.0.193/tdf     
 
-             servidor=$(zenity --list  --radiolist --width=450 --height=500 \
-              --title="Escolha os defeitos que deseja ver" \
-              --column="Seleção" --column="Cod. Idioma" --column="Idioma" \
-                TRUE  http://tdf.c3sl.ufpr.br "UFPR" \
-                FALSE http://linorg.usp.br/LibreOffice "USP"  \
-                FALSE http://ftp.unicamp.br/pub "UNICAMP"  \
-                FALSE http://mirror.pop-sc.rnp.br/mirror/tdf  "Pop-sc"  \
-                FALSE http://mirror.nexcess.net/tdf "Mirror Nexcess"  \
-                FALSE http://mirror.ufms.br/tdf "Mirror UFMS"  \
-                FALSE http://tdf.ufes.br "Mirror UFES"  \
-                FALSE 192.168.50.122/tdf  "Servidor Local" )   
+            servidor=$(zenity --list --radiolist --width=450 --height=400 \
+            --title="Escolha o servidor  espelho" \
+            --text="Selecione o servidor para realizar o download  dos pacotes do LibreOffice"  \
+            --column="Seleção" --column="Link" --column="Instituição" \
+              TRUE  http://tdf.c3sl.ufpr.br "UFPR" \
+              FALSE http://linorg.usp.br/LibreOffice "USP"  \
+              FALSE http://ftp.unicamp.br/pub "UNICAMP"  \
+              FALSE http://mirror.pop-sc.rnp.br/mirror/tdf  "Pop-SC"  \
+              FALSE http://mirror.nexcess.net/tdf "Mirror Nexcess"  \
+              FALSE http://mirror.ufms.br/tdf "Mirror UFMS"  \
+              FALSE http://tdf.ufes.br "Mirror UFES"  \
+              FALSE 192.168.0.193/tdf  "Servidor Local" )
 
-
-
+            if [ $? == 0 ]; then       
 
              #3 Testando  o gernciador de pacotes"
-
-                if   [ -e /usr/bin/rpm ]; then
-                      gerenciadorPacote=rpm
-                      diretorio=RPMS
+                if   [ -e "/bin/rpm" ]; then
+                    gerenciadorPacote=rpm
+                    diretorio=RPMS
                   else  
-                      gerenciadorPacote=deb
-                      diretorio=DEBS
+                    gerenciadorPacote=deb
+                    diretorio=DEBS
                 fi
-
              #4 Testando  Arquitetura do desktop"
-
                 if [ `getconf LONG_BIT` = "64" ]
                 then
-                     plafatorma=x86_64
+                   plafatorma=x86_64
                    plafatorma2=x86-64
                 else
                   plafatorma=x86
@@ -65,9 +72,7 @@ case $? in
                 fi
 
              #5 Escolhendo o idioma local
-
-
-              idioma=$(zenity --list  --radiolist --width=450 --height=500 \
+              idioma=$(zenity --list --radiolist --width=450 --height=500 \
                --title="Escolha os defeitos que deseja ver" \
                --column="Seleção" --column="Cod. Idioma" --column="Idioma" \
                  TRUE  pt-BR  "Portuguese (Brazil)"  \
@@ -138,249 +143,227 @@ case $? in
                         if [ $status = 0 ]
                         then
 
-
                           while true
                           do
                               resp=$(zenity --password --text "Insira a sua senha" --title "Autenticação")
 
-                              
-                                 if   [ -e /usr/bin/rpm ]; then
-                                       gerenciadorPacote=rpm
-                                       diretorio=RPMS
-                                   else  
-                                       gerenciadorPacote=deb
-                                       diretorio=DEBS
-                                 fi
-
-                              #4 Testando  Arquitetura do desktop"
-
-                                 if [ `getconf LONG_BIT` = "64" ]
-                                 then
-                                      plafatorma=x86_64
-                                    plafatorma2=x86-64
-                                 else
-                                   plafatorma=x86
-                                   plafatorma2=x86
-                                 fi
-
                               # Pega a senha do login gráfico
                               senha=$(echo "$resp" | cut -f1 -d'|')
-
-                                                                          (
-                                                                          echo "1" ; sleep 1
-                                                                          echo "# Criando diretórios" ; sleep 1
-
-                                                                          # Passa a senha
-                                                                          echo $senha | sudo -S -u root zenity --info --text "Vamos começar a instalação" 
-
-                               
-                                                                          
-                                                                          echo "5" ; sleep 1
-                                                                          echo "# Criando diretórios" ; sleep 1
-                                                                          # Criando diretório para  baixar os pacotes de acordo como versão, gerenciador, arquitetura
-                                                                          #rm lixeiratemp
-                                                                          mkdir -m 777 -p "/home/"$USER"/Downloads/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"" 
-                                                                          destino="/home/"$USER"/Downloads/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma""   
-
-                                  #6                                      #Baixando o LibreOffice
-                                                                           ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Baixando pacotes !'  
-
-                                                                           echo "10" ; sleep 1
-                                                                           echo "# Baixando o pacote principal" ; sleep 1       
-                                                                           wget -c "$servidor"/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz  -P "$destino" 
-
-
-                                                                           echo "20" ; sleep 1
-                                                                           echo "# Baixando o pacote de ajuda" ; sleep 1       
-                                                                           wget -c "$servidor"/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote"_helppack_"$idioma".tar.gz   -P "$destino" 
-
-                                  #7                                      # Testando se a necessidade de baixar o pacote idioma, no caso do idioma inglÊs não há necessidade. 
-                                                                          if  ! [  "$idioma" = "en-US" ]
-                                                                          then
-
-                                                                          echo "30" ; sleep 1
-                                                                           echo "# Baixando o pacote de idioma" ; sleep 1 
-                                                                          wget -c "$servidor"/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote"_langpack_"$idioma".tar.gz   -P "$destino" 
-                                                                          else 
-                                                                          exit 1   
-                                                                          fi
-
-                                                                            echo "40" ; sleep 1
-                                                                           echo "# Removendo versão anterior" ; sleep 1 
-                                  #8                                          #Testando se o pacote Core do LibreOffice foi instalado para dar continuidade ao processso, caso afirmativo ocorre um teste de gerenciador de pacotes para desinstalar a verão anterior do LO. 
-                                                                                ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Removendo versão anterior '$comparar-versao-instalada'. !'      
-                                                                              if  [ -e "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz ]
-                                                                                  then
-                                                                                   if [ -e /usr/bin/yum  ]; then
-                                                                                    sudo -S  yum remove openoffice[0-9]* libreoffice[0-9]* -y
-
-                                                                                   elif [ -e /usr/bin/zypper  ]; then
-                                                                                    sudo -S  zypper -n remove libreoffice[0-9]*
-                                                                                  
-                                                                                  elif [ -e /usr/bin/zypper ]; then
-                                                                                    sudo -S zypper -n remove openoffice[0-0]*
-
-                                                                                   elif [ -e /usr/bin/dpkg  ]; then
-                                                                                   sudo -S  apt-get remove --purge libreoffice[0-9]* -y  
-
-                                                                                  else
-                                                                                      echo "LibreOffice não encontrado, continuar instalação"  
-                                                                                  fi
-                                                                                  
-                                  # 9                                             # Descompactando os pacotes Libre Office
-                                                                                     ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Extraindo pacotes !' 
-                                                                                      
-                                                                                      echo "50" ; sleep 1
-                                                                                      echo "# Descompactando pacote principal" ; sleep 1         
-
-                                                                                      tar -xzf  "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz  -C /tmp 
-                                                                                  
-                                  #10                                             # Testando a necessidade de instalar Pacote de Idioma
-                                                                                  if  ! [  "$idioma" = "en-US" ]
-                                                                                  then
-
-                                                                                      echo "60" ; sleep 1
-                                                                                      echo "# Descompactando  o pacote de idioma" ; sleep 1 
-                                                                                      tar -xzf  "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote"_langpack_"$idioma".tar.gz   -C /tmp 
-                                                                                  else 
-                                                                                       exit 1  
-                                                                                  fi
-                                                                                  
-                                  #11                                             # Instalação do Pacote de Ajuda
-                                                                                      echo "70" ; sleep 1
-                                                                                      echo "# Descompactando o pacote  de ajuda" ; sleep 1     
-                                                                                      tar -xzf   "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote"_helppack_"$idioma".tar.gz  -C /tmp 
-
-                                                                                  # Aqui ocorre a instalação do pacote principal do Libre Office
-                                                                                  
-                                  #12                                             #PACOTE ACORE
-                                                                                   ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes principal!'   
-                                                                                 tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao
-                                                                                  valorsubversao=$(<subversao)
-
-                                                                                      echo "75" ; sleep 1
-                                                                                      echo "# Instalando o  core, o pacote principal " ; sleep 1 
-                                                                                  
-                                                                                      if [ -e /usr/bin/dpkg  ]; then
-
-                                                                                       
-                                                                                     sudo -S dpkg -i /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"/"$diretorio"/*  
-                                                                                      else
-                                                                                     sudo -S rpm -Uvh /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"/"$diretorio"/*  
-                                                                                      fi
-                                                                                  
-                                  #13                                             ##Instalação do PACOTE DE LINGUAGEM
-
-                                                                                   ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes de idioma!'   
-                                                                                  if  ! [  "$idioma" = "en-US" ]
-                                                                                  then
-                                                                                      tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao 
-                                                                                      valorsubversao=$(<subversao)
-
-                                                                                              echo "80" ; sleep 1
-                                                                                            echo "# Instalando o pacote de linguagem" ; sleep 1 
-
-                                                                                          if [ -e /usr/bin/dpkg  ]; then
-                                                                                      sudo -S    dpkg -i /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"_langpack_"$idioma"/"$diretorio"/*  
-                                                                                          else
-                                                                                      sudo -S    rpm -Uvh /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"_langpack_"$idioma"/"$diretorio"/*  
-                                                                                          fi
-                                                                                  
-                                                                                  else 
-                                                                                       exit 1  
-                                                                                  fi 
-                                                                                  
-                                  #14                                             ##PACOTE DE AJUDA
-                                                                                     echo "90" ; sleep 1
-                                                                                      echo "# Instalando o pacote de ajuda " ; sleep 1 
-                                                                                  ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes  de ajuda!'   
-                                                                                 tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao 
-                                                                                  valorsubversao=$(<subversao)
-
-
-                                                                                      if [ -e /usr/bin/dpkg  ]; then
-                                                                                   sudo -S  dpkg -i /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"_helppack_"$idioma"/"$diretorio"/* 
-                                                                                      else
-                                                                                   sudo -S   rpm -Uvh /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"_helppack_"$idioma"/"$diretorio"/*  
-                                                                                      fi
-                                                                          else
-                                                                                  exit 1  
-                                                                          fi  
-                                                                                      
-
-                                  #15                         # Tratando os arquivos utilizados, no momento enviando para um subdiretório do Downloads
-                                                                           rm subversao
-
-                                                                             echo "100" ; sleep 1
-                                                                           echo "# Instalação concluída " ; sleep 1 
-
-
-                                                                          if  [ -n "$(ls -A /opt/libreoffic* )" ]
-                                                                              
-                                                                              then
-                                                                                  notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalação concluída !'   
-                                                                          else
-
-                                                                                   notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Não instalado !'
-
-                                                                          fi  
-
-                                                                          1 2>/dev/null && exit
-
-
-                                                                          ) |      
-                                                                                      zenity --progress --width=250 --height=100 \
-                                                                                        --title="Instalado LibreOffice" \
-                                                                                        --text="Iniciando..." \
-                                                                                        --percentage=0
-
-                                                                                      if [ "$?" = -1 ] ; then
-                                                                                              zenity --error \
-                                                                                                --text="Instalação cancelada."
-                                                                                      fi
-
-                                                            
-               
-
-                                                   # Perguntar se quer tentar novamente.
-                                                      zenity --question --text 'Sucesso. clique em ok para sair.' --ok-label="Repetir" --cancel-label="OK"
-
-                                                      # Sair se pressionou cancelar.
-                                                      (( $? == 1 )) && 
-
-
-                                                         #!/bin/sh
-                                                         zenity --question --text="Instalar o Monitor de Atualização" --ok-label="Sim" --cancel-label="Não"
-                                                         if [ $? = 0 ] ; then
-                                                          
-                                                          sudo -s wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/monitor-libreoffice.sh -P /usr/bin/
-                                                          
-                                                          sudo -S chmod +x   /usr/bin/monitor-libreoffice.sh
-                                                          
-                                                          (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab - 
-                                                          
-                                                          echo $USER > usertemp_install |  sudo   sh -c  'echo "Defaults:$(cat usertemp_install !requiretty" >> /etc/sudoers' ; rm usertemp_install
-
-
-
-
-
-
-
-                                                      else
-                                                         exit 
-                                                      fi 
-
-
-
-                               done                   
+                                      (
+                                      echo "1" ; sleep 1
+                                      echo "# Criando diretórios" ; sleep 1
+                                      # Passa a senha
+                                      echo $senha | sudo -S -u root zenity --info --text "Iniciando instalação \n Salve os trabalhos aberto no libreoffice e clique em OK" 
                                       
+                                      if ! [ -e /usr/bin/notify-send  ]; then
+                                          
+                                            if [ -e /usr/bin/dnf  ]; then
+                                                sudo -S  dnf install notify-send -y
 
+                                            elif [ -e /usr/bin/zypper  ]; then
+                                                sudo -S  zypper -n install notify-send
+                                                                    
+                                            elif [ -e /usr/bin/zypper ]; then
+                                                sudo -S zypper -n install notify-send
 
-                              else
-                                  exit 0
-                              fi
-   ;;
+                                            elif [ -e /usr/bin/dpkg  ]; then
+                                                sudo -S  apt-get install notify-send -y
+
+                                            else
+                                                echo "gernciador não encontrado"  
+                                            fi
+                                      else
+                                          echo "notify-send já instalado"      
+
+                                      fi                                                                  
+                                      echo "5" ; sleep 1
+                                      echo "# Criando diretórios" ; sleep 1
+                                      # Criando diretório para  baixar os pacotes de acordo como versão, gerenciador, arquitetura
+                                      #rm lixeiratemp
+                                      mkdir -m 777 -p "/home/"$USER"/Downloads/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"" 
+                                      destino="/home/"$USER"/Downloads/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma""   
+
+#6                                    #Baixando o LibreOffice
+                                      ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Baixando pacotes !'  
+
+                                      echo "10" ; sleep 1
+                                      echo "# Baixando o pacote principal" ; sleep 1       
+                                      wget -c "$servidor"/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz  -P "$destino" 
+
+                                      echo "20" ; sleep 1
+                                      echo "# Baixando o pacote de ajuda" ; sleep 1       
+                                      wget -c "$servidor"/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote"_helppack_"$idioma".tar.gz   -P "$destino" 
+
+#7                                    # Testando se há necessidade de baixar o pacote idioma, no caso do idioma inglÊs não há necessidade. 
+                                       if  ! [  "$idioma" = "en-US" ]
+                                             then
+                                                  echo "30" ; sleep 1
+                                                  echo "# Baixando o pacote de idioma" ; sleep 1 
+                                                  wget -c "$servidor"/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote"_langpack_"$idioma".tar.gz   -P "$destino" 
+                                        else 
+                                                   exit 1   
+                                        fi
+
+                                      echo "40" ; sleep 1
+                                      echo "# Removendo versão anterior" ; sleep 1 
+#8                                    #Testando se o pacote Core do LibreOffice foi baixado para dar continuidade ao processso, caso afirmativo ocorre um teste de gerenciador de pacotes para desinstalar a verão anterior do Libre Office. 
+                                      ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Removendo versão anterior '$comparar-versao-instalada'. !'      
+                                      if  [ -e "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz ]
+                                          then
+                                                  if [ -e /usr/bin/dnf  ]; then
+                                                      sudo -S  dnf remove openoffice* libreoffice* -y
+
+                                                  elif [ -e /usr/bin/zypper  ]; then
+                                                      sudo -S  zypper -n remove libreoffice[0-9]*
+                                                                          
+                                                  elif [ -e /usr/bin/zypper ]; then
+                                                      sudo -S zypper -n remove openoffice[0-9]*
+
+                                                  elif [ -e /usr/bin/dpkg  ]; then
+                                                      sudo -S  apt-get remove --purge libreoffice[0-9]* -y  
+
+                                                  else
+                                                      echo "LibreOffice não encontrado, continuar instalação"  
+                                                  fi
+                                                                                  
+#9                                        # Descompactando os pacotes Libre Office
+                                          ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Extraindo pacotes !' 
+                                                                                      
+                                          echo "50" ; sleep 1
+                                          echo "# Descompactando pacote principal" ; sleep 1         
+
+                                          tar -xzf  "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz  -C /tmp 
+                                                                                  
+#10                                       # Testando a necessidade de instalar Pacote de Idioma
+                                                if  ! [  "$idioma" = "en-US" ]
+                                                    then
+
+                                          echo "60" ; sleep 1
+                                          echo "# Descompactando  o pacote de idioma" ; sleep 1 
+                                          tar -xzf  "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote"_langpack_"$idioma".tar.gz   -C /tmp 
+                                                else 
+                                                  exit 1  
+                                                fi
+                                                                                  
+#11                                       # Instalação do Pacote de Ajuda
+                                          echo "70" ; sleep 1
+                                          echo "# Descompactando o pacote  de ajuda" ; sleep 1     
+                                          tar -xzf   "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote"_helppack_"$idioma".tar.gz  -C /tmp 
+
+                                          # Aqui ocorre a instalação do pacote principal do Libre Office
+                                                                                  
+#12                                       #PACOTE ACORE
+                                          ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes principal!'   
+                                          tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao
+                                          valorsubversao=$(<subversao)
+
+                                          echo "75" ; sleep 1
+                                          echo "# Instalando o  core, o pacote principal " ; sleep 1 
+                                                                                  
+                                                if [ -e /usr/bin/dpkg  ]; then
+                                                                                  
+                                                  sudo -S dpkg -i /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"/"$diretorio"/*  
+                                                else
+                                                  sudo -S rpm -Uvh /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"/"$diretorio"/*  
+                                                fi
+                                                                                  
+#13                                       ##Instalação do PACOTE DE LINGUAGEM
+                                          ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes de idioma!'   
+                                                if  ! [  "$idioma" = "en-US" ]
+                                                  then
+                                                  tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao 
+                                                  valorsubversao=$(<subversao)
+
+                                          echo "80" ; sleep 1
+                                          echo "# Instalando o pacote de linguagem" ; sleep 1 
+
+                                                  if [ -e /usr/bin/dpkg  ]; then
+                                                  sudo -S    dpkg -i /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"_langpack_"$idioma"/"$diretorio"/*  
+                                                  else
+                                                  sudo -S    rpm -Uvh /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"_langpack_"$idioma"/"$diretorio"/*  
+                                                  fi
+                                                           
+                                                else 
+                                                  exit 1  
+                                                fi 
+                                                                                  
+#14                                       ##PACOTE DE AJUDA
+                                          echo "90" ; sleep 1
+                                          echo "# Instalando o pacote de ajuda " ; sleep 1 
+                                          ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes  de ajuda!'   
+                                                tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao 
+                                                valorsubversao=$(<subversao)
+                                                rm subversao
+
+                                                if [ -e /usr/bin/dpkg  ]; then
+                                                    sudo -S  dpkg -i /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"_helppack_"$idioma"/"$diretorio"/* 
+                                                else
+                                                    sudo -S   rpm -Uvh /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"_helppack_"$idioma"/"$diretorio"/*  
+                                                fi
+                                      else
+                                      exit 1  
+                                      fi  
+                                                                                  
+#15                                       # Tratando os arquivos utilizados, no momento enviando para um subdiretório do Downloads
+                                                                         
+                                          echo "100" ; sleep 1
+                                          echo "# Instalação concluída " ; sleep 1 
+
+                                      if  [ -n "$(ls -A /opt/libreoffic* )" ]                                                                        
+                                            then
+                                                notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalação concluída !'   
+                                      else
+                                                notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Não instalado !'
+                                      fi  
+
+                                       1 2>/dev/null && exit
+
+                                      ) |      
+                                        zenity --progress --pulsate  --width=250 --height=100 \
+                                                 --title="Instalado LibreOffice" \
+                                                 --text="Iniciando..." \
+                                                 --percentage=0
+
+                                            if [ "$?" = -1 ] ; then
+                                              zenity --error \
+                                                 --text="Instalação cancelada."
+                                            fi
+                                                              
+                                        zenity --question --default-cancel --no-wrap --text 'LibreOffice instalado ! \n Clique em Prosseguir para ativar o monitor de atualização. \n Ou Sair se não quiser ativá-lo' --ok-label="Sair" --cancel-label="OK"
+                                            # Sair se pressionou cancelar.
+                                              (( $? == 1 )) && 
+                        
+                                        zenity --question --text="Instalar o Monitor de Atualização" --ok-label="Sim" --cancel-label="Não"
+                                                  if [ $? = 0 ] ; then
+
+                                                    if ! [ -e /usr/bin/monitor-libreoffice.sh ]; then   
+                                                    sudo -S wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/monitor-libreoffice.sh -P /usr/bin/
+                                                         
+                                                    sudo -S chmod +x   /usr/bin/monitor-libreoffice.sh
+                                                       
+                                                    (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab - ; exit 0
+
+                                                    (( $?  )) &&  exit 
+                                                    else
+                                                        exit 0
+                                                    fi     
+
+                                                  else
+                                                    exit 0
+                                                  fi
+                          done                   
+                             exit 0                 
+                    else
+                      exit 0
+                    fi
+            else                                      
+              exit 0            
+            fi       
+                        
+			  else
+          exit 0
+        fi
+   ;;   
     1)
         echo "Instalação Cancelada!"
 	;;
