@@ -35,7 +35,7 @@ case $? in
 #1           ## Escolhendo a versão do LibreOffice
              vs=$(zenity --entry --title="Insira a Versao" --text="versão:")
 	        if [ $? == 0 ]; then		     
- #2           Aqui voĉe pode  inserir  uma lista de seus servidoes preferênciais para baixar o LibreOFfice, com a possiblidies de inserir  um servidor local, ideal para  ambientes  empresariais
+#2           Aqui voĉe pode  inserir  uma lista de seus servidoes preferênciais para baixar o LibreOFfice, com a possiblidies de inserir  um servidor local, ideal para  ambientes  empresariais
               #Nesse caso utilizei o servidor em minha rede com o IP 192.168.0.193/tdf     
 
             servidor=$(zenity --list --radiolist --width=450 --height=400 \
