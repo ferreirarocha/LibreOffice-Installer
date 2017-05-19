@@ -28,7 +28,7 @@ case $? in
              statussaida=$?
 	     if [ $? == 1 ]; then		
 		exit
-	    else	
+	     fi
 
              #2 Aqui voĉe pode  inserir  uma lista de seus servidoes preferênciais para baixar o LibreOFfice, com a possiblidies de inserir  um servidor local, ideal para  ambientes  empresariais
               #Nesse caso utilizei o servidor em minha rede com o IP 192.168.0.193/tdf     
@@ -328,7 +328,7 @@ case $? in
                         else
                           exit 0
                         fi
-		fi	
+			
    ;;   
     1)
         echo "Instalação Cancelada!"
