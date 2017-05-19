@@ -342,10 +342,10 @@ case $? in
                                                     sudo -S chmod +x   /usr/bin/monitor-libreoffice.sh
 
 
-                                                      crontab -l | grep -q 'bash /usr/bin/monitor-libreoffice.sh'  && echo  '0' > CRON || echo '1' > CRON
+                                                      crontab -l | grep -q 'bash /usr/bin/monitor-libreoffice.sh'  && echo  '0' > /tmp/CRON || echo '1' > /tmp/CRON
 
                                                         
-                                                             if [[ $(cat CRON) == "1" ]]; then 
+                                                             if [[ $(cat /tmp/CRON) == "1" ]]; then 
 
                                                               (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab -    ; exit 0
 
