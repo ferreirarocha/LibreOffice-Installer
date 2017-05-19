@@ -254,8 +254,8 @@ case $? in
                                                                                   
 #12                                       #PACOTE ACORE
                                           ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes principal!'   
-                                          tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao
-                                          valorsubversao=$(<subversao)
+                                          tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  /tmp/subversao
+                                          valorsubversao=$(</tmp/subversao)
 
                                           echo "75" ; sleep 1
                                           echo "# Instalando o  core, o pacote principal " ; sleep 1 
@@ -271,8 +271,8 @@ case $? in
                                           ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes de idioma!'   
                                                 if  ! [  "$idioma" = "en-US" ]
                                                   then
-                                                  tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao 
-                                                  valorsubversao=$(<subversao)
+                                                  tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  /tmp/subversao 
+                                                  valorsubversao=$(</tmp/subversao)
 
                                           echo "80" ; sleep 1
                                           echo "# Instalando o pacote de linguagem" ; sleep 1 
@@ -291,8 +291,8 @@ case $? in
                                           echo "90" ; sleep 1
                                           echo "# Instalando o pacote de ajuda " ; sleep 1 
                                           ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes  de ajuda!'   
-                                                tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao 
-                                                valorsubversao=$(<subversao)
+                                                tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  /tmp/subversao
+                                                valorsubversao=$(</tmp/subversao)
                                                 rm subversao
 
                                                 if [ -e /usr/bin/dpkg  ]; then
@@ -353,9 +353,6 @@ case $? in
                                                               echo "Já Configurado"   ; exit 0
 
                                                             fi
-                                                     
-                                                      
-
 
                                                        exit 0
 
@@ -374,9 +371,8 @@ case $? in
                     fi
             else                                      
               exit 0            
-            fi       
-                        
-			  else
+            fi                            
+	else
           exit 0
         fi
    ;;   
