@@ -2,11 +2,22 @@
 exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffice.log)
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 #Baixando a arquivo de aviso sobre o script
-    wget -c https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso -P /tmp
-    FILE=/tmp/aviso
-    zenity --text-info --width=800 --height=600 \
-           --title="Sobre o LibreOffice" \
-           --filename=$FILE    
+
+
+          if [ -e /usr/bin/dnf  ]; then
+
+                wget -c https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso -P /tmp
+                FILE=/tmp/aviso
+                zenity --text-info --width=800 --height=600 \
+                --title="Sobre o LibreOffice" \
+                --filename=$FILE  
+               
+          else
+                zenity --text-info --html --width=800 --height=600 \
+                --title="Sobre o LibreOffice" \
+                --url=alfabech.com  
+
+          fi  
 case $? in
     0)
         echo "Iniciar Instalação!"
@@ -135,7 +146,28 @@ case $? in
                                       echo "# Criando diretórios" ; sleep 1
                                       # Passa a senha
                                       echo $senha | sudo -S -u root zenity --info --text "Iniciar instalação \n salve os trabalhos aberto no libreoffice e clique em OK" 
-                                                                                                    
+                                      
+                                      if ! [ -e /usr/bin/notify-send  ]; then
+                                          
+                                            if [ -e /usr/bin/dnf  ]; then
+                                                sudo -S  dnf install notify-send -y
+
+                                            elif [ -e /usr/bin/zypper  ]; then
+                                                sudo -S  zypper -n install notify-send
+                                                                    
+                                            elif [ -e /usr/bin/zypper ]; then
+                                                sudo -S zypper -n install notify-send
+
+                                            elif [ -e /usr/bin/dpkg  ]; then
+                                                sudo -S  apt-get install notify-send -y
+
+                                            else
+                                                echo "gernciador não encontrado"  
+                                            fi
+                                      else
+                                          echo "notify-send já instalado"      
+
+                                      fi                                                                  
                                       echo "5" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
                                       # Criando diretório para  baixar os pacotes de acordo como versão, gerenciador, arquitetura
