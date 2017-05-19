@@ -1,21 +1,12 @@
 #!/bin/bash 
-
 exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffice.log)
-
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 #Baixando a arquivo de aviso sobre o script
-
     wget -c https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso -P /tmp
-
     FILE=/tmp/aviso
     zenity --text-info --width=800 --height=600 \
            --title="Sobre o LibreOffice" \
            --filename=$FILE    
-
-
-
-
-
 case $? in
     0)
         echo "Iniciar Instalação!"
@@ -24,10 +15,7 @@ case $? in
 
              ## Escolhendo a versão do LibreOffice
              vs=$(zenity --entry --title="Insira a Versao" --text="versão:")
-	        if [ $? == 0 ]; then		
-		      
-	     
-
+	        if [ $? == 0 ]; then		     
              #2 Aqui voĉe pode  inserir  uma lista de seus servidoes preferênciais para baixar o LibreOFfice, com a possiblidies de inserir  um servidor local, ideal para  ambientes  empresariais
               #Nesse caso utilizei o servidor em minha rede com o IP 192.168.0.193/tdf     
 
@@ -45,7 +33,6 @@ case $? in
               FALSE 192.168.0.193/tdf  "Servidor Local" )
 
             if [ $? == 0 ]; then       
-
 
              #3 Testando  o gernciador de pacotes"
                 if   [ -e "/bin/rpm" ]; then
