@@ -1,7 +1,7 @@
-
 #!/bin/sh -x
+#versao-1.0
 #data=date
-exec >& >(tee -a /tmp/"$data"-logupdatelibreoffice.txt)
+exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffice.log)
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 
 
@@ -311,3 +311,4 @@ if [ "$value" -gt "$value2" ];
 else 
     sudo echo -s "você tem a versão mais atual" > /var/log/backup.log
 fi
+#versao-1.0
