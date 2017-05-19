@@ -4,19 +4,17 @@ exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffi
 
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 #Baixando a arquivo de aviso sobre o script
-if [ -e /usr/bin/dnf  ]; then
+
     wget -c https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso -P /tmp
 
     FILE=/tmp/aviso
     zenity --text-info --width=800 --height=600 \
            --title="Sobre o LibreOffice" \
-           --filename=$FILE \   
-else
+           --filename=$FILE    
 
-zenity --text-info  --html  --width=800 --height=600 \
-       --url=http://pt-br.libreoffice.org \
-       --title="Sobre o LibreOffice" \
-fi
+
+
+
 
 case $? in
     0)
