@@ -1,6 +1,11 @@
 #!/bin/sh -x
-#versao-1.0
-#data=date
+#Autor: Marcos Ferreira da Rocha
+#Email: marcos.fr.rocha@gmail.com
+#Blog:  alfabech.com
+#Onde o econtra, Grupo de LibreOffice no Telegram https://t.me/libreofficebr, https://t.me/libreofficebrasil
+#Versão: 1.0 
+#Ano: 18 de Maio 2017
+
 exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffice.log)
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 
