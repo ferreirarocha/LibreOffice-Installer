@@ -29,13 +29,13 @@ export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr
 case $? in
     0)
         echo "Iniciar Instalação!"
-	# próximo passo
+#0	 Definindo a o repositório estable.
 	           versaostatus="stable"
 
-             ## Escolhendo a versão do LibreOffice
+#1           ## Escolhendo a versão do LibreOffice
              vs=$(zenity --entry --title="Insira a Versao" --text="versão:")
 	        if [ $? == 0 ]; then		     
-             #2 Aqui voĉe pode  inserir  uma lista de seus servidoes preferênciais para baixar o LibreOFfice, com a possiblidies de inserir  um servidor local, ideal para  ambientes  empresariais
+ #2           Aqui voĉe pode  inserir  uma lista de seus servidoes preferênciais para baixar o LibreOFfice, com a possiblidies de inserir  um servidor local, ideal para  ambientes  empresariais
               #Nesse caso utilizei o servidor em minha rede com o IP 192.168.0.193/tdf     
 
             servidor=$(zenity --list --radiolist --width=450 --height=400 \
@@ -53,7 +53,7 @@ case $? in
 
             if [ $? == 0 ]; then       
 
-             #3 Testando  o gerenciador de pacotes"
+#3              Testando  o gerenciador de pacotes"
                 if   [ -e "/bin/rpm" ]; then
                     gerenciadorPacote=rpm
                     diretorio=RPMS
@@ -61,7 +61,7 @@ case $? in
                     gerenciadorPacote=deb
                     diretorio=DEBS
                 fi
-             #4 Testando  Arquitetura do desktop"
+#4              Testando  Arquitetura do desktop"
                 if [ `getconf LONG_BIT` = "64" ]
                 then
                    plafatorma=x86_64
@@ -71,10 +71,10 @@ case $? in
                   plafatorma2=x86
                 fi
 
-             #5 Escolhendo o idioma local
-              idioma=$(zenity --list --radiolist --width=450 --height=500 \
-               --title="Escolha os defeitos que deseja ver" \
-               --column="Seleção" --column="Cod. Idioma" --column="Idioma" \
+#5 		Escolhendo o idioma local
+              	idioma=$(zenity --list --radiolist --width=450 --height=500 \
+               	--title="Escolha os defeitos que deseja ver" \
+               	--column="Seleção" --column="Cod. Idioma" --column="Idioma" \
                  TRUE  pt-BR  "Portuguese (Brazil)"  \
                  FALSE am "Amharic - አማርኛ"  \
                  FALSE ar "Arabic  - العربية  "  \
@@ -147,12 +147,12 @@ case $? in
                           do
                               resp=$(zenity --password --text "Insira a sua senha" --title "Autenticação")
 
-                              # Pega a senha do login gráfico
+#5.1                          Pega a senha do login gráfico
                               senha=$(echo "$resp" | cut -f1 -d'|')
                                       (
                                       echo "1" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
-                                      # Passa a senha
+#5.2                                  # Passa a senha
                                       echo $senha | sudo -S -u root zenity --info --text "Iniciando instalação \n Salve os trabalhos aberto no libreoffice e clique em OK" 
                                       
                                       if ! [ -e /usr/bin/notify-send  ]; then
@@ -178,8 +178,7 @@ case $? in
                                       fi                                                                  
                                       echo "5" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
-                                      # Criando diretório para  baixar os pacotes de acordo como versão, gerenciador, arquitetura
-                                      #rm lixeiratemp
+#5.3                                  # Criando diretório para  baixar os pacotes de acordo como versão, gerenciador, arquitetura                                     
                                       mkdir -m 777 -p "/home/"$USER"/Downloads/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"" 
                                       destino="/home/"$USER"/Downloads/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma""   
 
@@ -375,7 +374,7 @@ case $? in
 	else
           exit 0
         fi
-   ;;   
+        ;;   
     1)
         echo "Instalação Cancelada!"
 	;;
