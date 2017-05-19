@@ -2,7 +2,7 @@
 #Autor: Marcos Ferreira da Rocha
 #Email: marcos.fr.rocha@gmail.com
 #Blog:  alfabech.com
-#Onde o econtra, Grupo de LibreOffice no Telegram https://t.me/libreofficebr, https://t.me/libreofficebrasil
+#Onde encontrar o criador do scrit ?, Grupo de LibreOffice no Telegram https://t.me/libreofficebr, https://t.me/libreofficebrasil
 #Versão: 1.0 
 #Ano: 18 de Maio 2017
 
@@ -53,7 +53,7 @@ case $? in
 
             if [ $? == 0 ]; then       
 
-             #3 Testando  o gernciador de pacotes"
+             #3 Testando  o gerenciador de pacotes"
                 if   [ -e "/bin/rpm" ]; then
                     gerenciadorPacote=rpm
                     diretorio=RPMS
