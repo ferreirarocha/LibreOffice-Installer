@@ -295,15 +295,18 @@ case $? in
                         
                                         zenity --question --text="Instalar o Monitor de Atualização" --ok-label="Sim" --cancel-label="Não"
                                                   if [ $? = 0 ] ; then
-                                                       
-                                                    sudo -S wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/monitor-libreoffice.sh -P /usr/bin/monitor-libreoffice.sh
+
+                                                    if ! [ -e /usr/bin/monitor-libreoffice.sh ]; then   
+                                                    sudo -S wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/monitor-libreoffice.sh -P /usr/bin/
                                                          
                                                     sudo -S chmod +x   /usr/bin/monitor-libreoffice.sh
                                                        
                                                     (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab - ; exit 0
 
                                                     (( $?  )) &&  exit 
-
+                                                    else
+                                                        exit 0
+                                                    fi     
 
                                                   else
                                                     exit 0
