@@ -347,17 +347,17 @@ case $? in
                                                         
                                                              if [[ $(cat CRON) == "1" ]]; then 
 
-                                                              (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab -  
+                                                              (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab -    ; exit 0
 
                                                             else 
-                                                              echo "Já Configurado" 
+                                                              echo "Já Configurado"   ; exit 0
 
                                                             fi
                                                      
                                                       
 
 
-                                                      ; exit 0
+                                                       exit 0
 
                                                     (( $?  )) &&  exit 
                                                     else
