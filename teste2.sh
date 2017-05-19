@@ -345,19 +345,19 @@ case $? in
                                                       crontab -l | grep -q 'bash /usr/bin/monitor-libreoffice.sh'  && echo  '0' > CRON || echo '1' > CRON
 
                                                         
-                                                            if [ $CRON =="1" ]; then 
+                                                             if [[ $(cat CRON) == "1" ]]; then 
 
-                                                              (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab -  ; exit 0
+                                                              (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab -  
 
                                                             else 
-                                                              echo "Já Configurado"  ; exit 0
+                                                              echo "Já Configurado" 
 
                                                             fi
-                                                        
+                                                     
                                                       
 
 
-                                                      
+                                                      ; exit 0
 
                                                     (( $?  )) &&  exit 
                                                     else
