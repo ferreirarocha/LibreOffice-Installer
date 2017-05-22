@@ -1,31 +1,26 @@
-#!/bin/sh -x
-#Autor: Marcos Ferreira da Rocha
-#Email: marcos.fr.rocha@gmail.com
-#Blog:  alfabech.com
-#Onde o econtra, Grupo de LibreOffice no Telegram https://t.me/libreofficebr, https://t.me/libreofficebrasil
-#Versão: 1.0 
-#Ano: 18 de Maio 2017
 
-exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffice.log)
+#!/bin/sh -x
+#data=date
+exec >& >(tee -a /tmp/"$data"-logupdatelibreoffice.txt)
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 
 
 #export DISPLAY=0.0
 
-curl http://linorg.usp.br/LibreOffice/libreoffice/stable/ > versao1 
-tail -4 versao1  > versao2 
-head -1  versao2 > versao3 
-cut -d= -f 5   versao3 > versao4 
-cat versao4 |  cut -c 2-6 > libreoffice-ultima-versao
+curl http://linorg.usp.br/LibreOffice/libreoffice/stable/ > /tmp/versao1 
+tail -4 /tmp/versao1  > /tmp/versao2 
+head -1  /tmp/versao2 > /tmp/versao3 
+cut -d= -f 5   /tmp/versao3 > /tmp/versao4 
+cat /tmp/versao4 |  cut -c 2-6 > /tmp/libreoffice-ultima-versao
 
-/usr/bin/libreoffice* --version > versao-instalada ; cat versao-instalada  | cut -c 12-17 versao-instalada > comparar-versao-instalada 
+/usr/bin/libreoffice* --version > /tmp/versao-instalada ; cat /tmp/versao-instalada  | cut -c 12-17 /tmp/versao-instalada > /tmp/comparar-versao-instalada 
 
-   sed 's/\.//g' libreoffice-ultima-versao  > UltimaVersao 
-   sed 's/\.//g' comparar-versao-instalada  > VersaoLocal 
+   sed 's/\.//g' /tmp/libreoffice-ultima-versao  > /tmp/UltimaVersao 
+   sed 's/\.//g' /tmp/comparar-versao-instalada  > /tmp/VersaoLocal 
 
 
-value=`cat UltimaVersao`
-value2=`cat VersaoLocal`
+value=`cat /tmp/UltimaVersao`
+value2=`cat /tmp/VersaoLocal`
 
 if [ "$value" -gt "$value2" ]; 
 	then
@@ -52,6 +47,33 @@ if [ "$value" -gt "$value2" ];
                     #   "http://mirror.unesp.br/tdf"                    "Mirror Unesp" 
                     # "192.168.50.122/tdf"                              "Servidor Local "  
 
+
+                    #3 Testando  o gernciador de pacotes"
+
+                            if   [ -e /usr/bin/rpm ]; then
+                                    gerenciadorPacote=rpm
+                                    diretorio=RPMS
+                            else  
+                                    gerenciadorPacote=deb
+                                    diretorio=DEBS
+                            fi
+
+                    #4 Testando  Arquitetura do desktop"
+
+                            if [ `getconf LONG_BIT` = "64" ];
+                            then
+                                 plafatorma=x86_64
+                                 plafatorma2=x86-64
+                            else
+                                plafatorma=x86
+                                plafatorma2=x86
+                            fi
+
+                    #5 Escolhendo o idioma local
+                    servidor="http://tdf.c3sl.ufpr.br"
+                    versaostatus="stable"
+                    vs=`cat libreoffice-ultima-versao`
+                    idioma="pt-BR"
                     #                       "Lista de idiomas diposniveis
 
                     #                       "pt-BR" "Portuguese (Brazil)" 
@@ -141,38 +163,7 @@ if [ "$value" -gt "$value2" ];
 
 
                         
-                    notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Iniciar Instalação !' 
-
-
-
-
-                    #3 Testando  o gernciador de pacotes"
-
-                            if   [ -e /usr/bin/rpm ]; then
-                                    gerenciadorPacote=rpm
-                                    diretorio=RPMS
-                            else  
-                                    gerenciadorPacote=deb
-                                    diretorio=DEBS
-                            fi
-
-                    #4 Testando  Arquitetura do desktop"
-
-                            if [ `getconf LONG_BIT` = "64" ];
-                            then
-                                 plafatorma=x86_64
-                                 plafatorma2=x86-64
-                            else
-                                plafatorma=x86
-                                plafatorma2=x86
-                            fi
-
-                    #5 Escolhendo o idioma local
-                    servidor="http://tdf.c3sl.ufpr.br"
-                    versaostatus="stable"
-                    vs=`cat libreoffice-ultima-versao`
-                    idioma="pt-BR"
-                       
+                    notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Iniciar Instalação !'    
 
 
 
@@ -314,6 +305,5 @@ if [ "$value" -gt "$value2" ];
        fi
         
 else 
-    sudo echo -s "você tem a versão mais atual" > /var/log/backup.log
+    echo "você tem a versão mais atual" > /var/log/backup.log
 fi
-#versao-1.0
