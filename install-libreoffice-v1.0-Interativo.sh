@@ -2,18 +2,18 @@
 #Autor: Marcos Ferreira da Rocha
 #Email: marcos.fr.rocha@gmail.com
 #Blog:  alfabech.com
-#Onde o econtra, Grupo de LibreOffice no Telegram https://t.me/libreofficebr, https://t.me/libreofficebrasil
+#Onde encontrar o criador do scrit ?, Grupo de LibreOffice no Telegram https://t.me/libreofficebr, https://t.me/libreofficebrasil
 #Versão: 1.0 
 #Ano: 18 de Maio 2017
 
 
 exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffice.log)
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
-#Baixando a arquivo de aviso sobre o script
+
 
 
           if [ -e /usr/bin/dnf  ]; then
-
+		#Baixando a arquivo de aviso sobre o script	
                 wget -c https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/aviso -P /tmp
                 FILE=/tmp/aviso
                 zenity --text-info --width=800 --height=600 \
@@ -29,13 +29,13 @@ export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr
 case $? in
     0)
         echo "Iniciar Instalação!"
-	# próximo passo
+#0	 Definindo a o repositório estable.
 	           versaostatus="stable"
 
-             ## Escolhendo a versão do LibreOffice
+#1           ## Escolhendo a versão do LibreOffice
              vs=$(zenity --entry --title="Insira a Versao" --text="versão:")
 	        if [ $? == 0 ]; then		     
-             #2 Aqui voĉe pode  inserir  uma lista de seus servidoes preferênciais para baixar o LibreOFfice, com a possiblidies de inserir  um servidor local, ideal para  ambientes  empresariais
+#2           Aqui voĉe pode  inserir  uma lista de seus servidoes preferênciais para baixar o LibreOFfice, com a possiblidies de inserir  um servidor local, ideal para  ambientes  empresariais
               #Nesse caso utilizei o servidor em minha rede com o IP 192.168.0.193/tdf     
 
             servidor=$(zenity --list --radiolist --width=450 --height=400 \
@@ -53,7 +53,7 @@ case $? in
 
             if [ $? == 0 ]; then       
 
-             #3 Testando  o gernciador de pacotes"
+#3              Testando  o gerenciador de pacotes"
                 if   [ -e "/bin/rpm" ]; then
                     gerenciadorPacote=rpm
                     diretorio=RPMS
@@ -61,7 +61,7 @@ case $? in
                     gerenciadorPacote=deb
                     diretorio=DEBS
                 fi
-             #4 Testando  Arquitetura do desktop"
+#4              Testando  Arquitetura do desktop"
                 if [ `getconf LONG_BIT` = "64" ]
                 then
                    plafatorma=x86_64
@@ -71,10 +71,10 @@ case $? in
                   plafatorma2=x86
                 fi
 
-             #5 Escolhendo o idioma local
-              idioma=$(zenity --list --radiolist --width=450 --height=500 \
-               --title="Escolha os defeitos que deseja ver" \
-               --column="Seleção" --column="Cod. Idioma" --column="Idioma" \
+#5 		Escolhendo o idioma local
+              	idioma=$(zenity --list --radiolist --width=450 --height=500 \
+               	--title="Escolha os defeitos que deseja ver" \
+               	--column="Seleção" --column="Cod. Idioma" --column="Idioma" \
                  TRUE  pt-BR  "Portuguese (Brazil)"  \
                  FALSE am "Amharic - አማርኛ"  \
                  FALSE ar "Arabic  - العربية  "  \
@@ -147,12 +147,12 @@ case $? in
                           do
                               resp=$(zenity --password --text "Insira a sua senha" --title "Autenticação")
 
-                              # Pega a senha do login gráfico
+#5.1                          Pega a senha do login gráfico
                               senha=$(echo "$resp" | cut -f1 -d'|')
                                       (
                                       echo "1" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
-                                      # Passa a senha
+#5.2                                  # Passa a senha
                                       echo $senha | sudo -S -u root zenity --info --text "Iniciando instalação \n Salve os trabalhos aberto no libreoffice e clique em OK" 
                                       
                                       if ! [ -e /usr/bin/notify-send  ]; then
@@ -178,8 +178,7 @@ case $? in
                                       fi                                                                  
                                       echo "5" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
-                                      # Criando diretório para  baixar os pacotes de acordo como versão, gerenciador, arquitetura
-                                      #rm lixeiratemp
+#5.3                                  # Criando diretório para  baixar os pacotes de acordo como versão, gerenciador, arquitetura                                     
                                       mkdir -m 777 -p "/home/"$USER"/Downloads/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma"" 
                                       destino="/home/"$USER"/Downloads/libreoffice/"$versaostatus"/"$vs"/"$gerenciadorPacote"/"$plafatorma""   
 
@@ -254,8 +253,8 @@ case $? in
                                                                                   
 #12                                       #PACOTE ACORE
                                           ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes principal!'   
-                                          tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao
-                                          valorsubversao=$(<subversao)
+                                          tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  /tmp/subversao
+                                          valorsubversao=$(</tmp/subversao)
 
                                           echo "75" ; sleep 1
                                           echo "# Instalando o  core, o pacote principal " ; sleep 1 
@@ -271,8 +270,8 @@ case $? in
                                           ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes de idioma!'   
                                                 if  ! [  "$idioma" = "en-US" ]
                                                   then
-                                                  tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao 
-                                                  valorsubversao=$(<subversao)
+                                                  tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  /tmp/subversao 
+                                                  valorsubversao=$(</tmp/subversao)
 
                                           echo "80" ; sleep 1
                                           echo "# Instalando o pacote de linguagem" ; sleep 1 
@@ -291,8 +290,8 @@ case $? in
                                           echo "90" ; sleep 1
                                           echo "# Instalando o pacote de ajuda " ; sleep 1 
                                           ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes  de ajuda!'   
-                                                tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  subversao 
-                                                valorsubversao=$(<subversao)
+                                                tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  /tmp/subversao
+                                                valorsubversao=$(</tmp/subversao)
                                                 rm subversao
 
                                                 if [ -e /usr/bin/dpkg  ]; then
@@ -340,8 +339,21 @@ case $? in
                                                     sudo -S wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/monitor-libreoffice.sh -P /usr/bin/
                                                          
                                                     sudo -S chmod +x   /usr/bin/monitor-libreoffice.sh
-                                                       
-                                                    (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab - ; exit 0
+
+
+                                                      crontab -l | grep -q 'bash /usr/bin/monitor-libreoffice.sh'  && echo  '0' > /tmp/CRON || echo '1' > /tmp/CRON
+
+                                                        
+                                                             if [[ $(cat /tmp/CRON) == "1" ]]; then 
+
+                                                              (crontab -l ; echo "20 *  * * *     export DISPLAY=:0 && bash /usr/bin/monitor-libreoffice.sh") | crontab -    ; exit 0
+
+                                                            else 
+                                                              echo "Já Configurado"   ; exit 0
+
+                                                            fi
+
+                                                       exit 0
 
                                                     (( $?  )) &&  exit 
                                                     else
@@ -358,12 +370,11 @@ case $? in
                     fi
             else                                      
               exit 0            
-            fi       
-                        
-			  else
+            fi                            
+	else
           exit 0
         fi
-   ;;   
+        ;;   
     1)
         echo "Instalação Cancelada!"
 	;;
