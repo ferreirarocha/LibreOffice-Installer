@@ -167,7 +167,7 @@ case $? in
                                                 sudo -S zypper -n install notify-send
 
                                             elif [ -e /usr/bin/dpkg  ]; then
-                                                sudo -S  apt-get install notify-send -y
+                                                sudo -S  apt-get install curl notify-send -y
 
                                             else
                                                 echo "gernciador não encontrado"  
