@@ -70,7 +70,7 @@ if [ "$value" -gt "$value2" ];
                             fi
 
                     #5 Escolhendo o idioma local
-                    servidor="http://tdf.c3sl.ufpr.br"
+                    servidor="192.168.0.187/tdf"
                     versaostatus="stable"
                     vs=`cat /tmp/libreoffice-ultima-versao`
                     idioma="pt-BR"
