@@ -49,7 +49,7 @@ case $? in
               FALSE http://mirror.nexcess.net/tdf "Mirror Nexcess"  \
               FALSE http://mirror.ufms.br/tdf "Mirror UFMS"  \
               FALSE http://tdf.ufes.br "Mirror UFES"  \
-              FALSE 192.168.0.193/tdf  "Servidor Local" )
+              FALSE 192.168.0.187/tdf  "Servidor Local" )
 
             if [ $? == 0 ]; then       
 
@@ -154,7 +154,8 @@ case $? in
                                       echo "# Criando diretórios" ; sleep 1
 #5.2                                  # Passa a senha
                                       echo $senha | sudo -S -u root zenity --info --text "Iniciando instalação \n Salve os trabalhos aberto no libreoffice e clique em OK" 
-                                      
+
+#5.2.1                                 Checando se o notify-send já está instalando          
                                       if ! [ -e /usr/bin/notify-send  ]; then
                                           
                                             if [ -e /usr/bin/dnf  ]; then
@@ -176,7 +177,33 @@ case $? in
                                       else
                                           echo "notify-send já instalado"      
 
-                                      fi                                                                  
+                                      fi 
+                                           
+#5.2.2                                 Checando se o curl já está instalando          
+				     
+				                              if ! [ -e /usr/bin/curl  ]; then
+                                          
+                                            if [ -e /usr/bin/dnf  ]; then
+                                                sudo -S  dnf install curl -y
+
+                                            elif [ -e /usr/bin/zypper  ]; then
+                                                sudo -S  zypper -n install curl
+                                                                    
+                                            elif [ -e /usr/bin/zypper ]; then
+                                                sudo -S zypper -n install curl
+
+                                            elif [ -e /usr/bin/dpkg  ]; then
+                                                sudo -S  apt-get install curl -y
+
+
+                                            else
+                                                echo "gerenciador não encontrado"  
+                                            fi
+                                      else
+                                          echo "curl já instalado"      
+
+                                      fi       
+                      
                                       echo "5" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
 #5.3                                  # Criando diretório para  baixar os pacotes de acordo como versão, gerenciador, arquitetura                                     
@@ -293,7 +320,7 @@ case $? in
                                           ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Instalando pacotes  de ajuda!'   
                                                 tar -tzf    "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz |  cut -d '_' -f2  | uniq  >  /tmp/subversao
                                                 valorsubversao=$(</tmp/subversao)
-                                                rm subversao
+                                                
 
                                                 if [ -e /usr/bin/dpkg  ]; then
                                                     sudo -S  dpkg -i /tmp/LibreOffice_"$valorsubversao"_Linux_"$plafatorma2"_"$gerenciadorPacote"_helppack_"$idioma"/"$diretorio"/* 
