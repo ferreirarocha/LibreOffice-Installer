@@ -181,7 +181,7 @@ case $? in
                                            
 #5.2.2                                 Checando se o curl já está instalando          
 				     
-				                              if ! [ -e /usr/bin/curl  ]; then
+				      if ! [ -e /usr/bin/curl  ]; then
                                           
                                             if [ -e /usr/bin/dnf  ]; then
                                                 sudo -S  dnf install curl -y
