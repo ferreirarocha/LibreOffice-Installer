@@ -365,8 +365,10 @@ case $? in
 
                                                     if ! [ -e /usr/bin/monitor-libreoffice.sh ]; then   
                                                     sudo -S wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/monitor-libreoffice.sh -P /usr/bin/
-                                                         
-                                                    sudo -S chmod +x   /usr/bin/monitor-libreoffice.sh
+						    sudo -S wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/instalador-libreoffice.sh -P /usr/bin/
+                                                          
+                                                    sudo -S chmod +x   /usr/bin/monitor-libreoffice.sh  
+						    sudo -S chmod +x   /usr/bin/instalador-libreoffice.sh
 
 
                                                       crontab -l | grep -q 'bash /usr/bin/monitor-libreoffice.sh'  && echo  '0' > /tmp/CRON || echo '1' > /tmp/CRON
