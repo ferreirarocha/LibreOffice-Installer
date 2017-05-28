@@ -285,20 +285,21 @@ case $? in
                                       if  [ -e "$destino"/LibreOffice_"$vs"_Linux_"$plafatorma2"_"$gerenciadorPacote".tar.gz ]
                                           then
                                                   if [ -e /usr/bin/dnf  ]; then
-                                                      sudo -S  dnf remove openoffice* libreoffice* -y
+                                                     ' sudo -S  dnf remove openoffice* libreoffice* -y '
 
                                                   elif [ -e /usr/bin/zypper  ]; then
-                                                      sudo -S  zypper -n remove libreoffice[0-9]*
+                                                      'sudo -S  zypper -n remove libreoffice[0-9]* '
                                                                           
                                                   elif [ -e /usr/bin/zypper ]; then
-                                                      sudo -S zypper -n remove openoffice[0-9]*
+                                                      'sudo -S zypper -n remove openoffice[0-9]* '
 
                                                   elif [ -e /usr/bin/dpkg  ]; then
-                                                      sudo -S  apt-get remove --purge libreoffice[0-9]* -y  
+                                                      'sudo -S  apt-get remove --purge libreoffice[0-9]* -y  '
 
                                                   else
                                                       echo "LibreOffice não encontrado, continuar instalação"  
                                                   fi
+                                                       
                                                                                   
 #9                                        # Descompactando os pacotes Libre Office
                                           ##notify-send -i libreoffice -t 50000 'LibreOffice '$vs'' 'Extraindo pacotes !' 
