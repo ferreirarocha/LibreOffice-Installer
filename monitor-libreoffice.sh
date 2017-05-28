@@ -148,8 +148,13 @@ if [ "$value" -gt "$value2" ];
 
        if [ $? = 0 ]; 
                then
-		xterm  -e "bash /usr/bin/instalador-libreoffice.sh"	&&  zenity --info --title "Atualização" --width=200 --height=100  --text  'O LibreOffice foi atualizado com sucesso clique em OK para saír'
-
+                if [-e /usr/bin/dnf ]; then      
+                    xterm  -e "bash /usr/bin/instalador-libreoffice.sh"	&&  zenity --info --title "Atualização" --width=200 --height=100  --text  'O LibreOffice foi atualizado com sucesso clique em OK para saír'
+                elif [-e /usr/bin/zypper ]; then
+                    xterm  -e "sudo bash /usr/bin/instalador-libreoffice.sh"	&&  zenity --info --title "Atualização" --width=200 --height=100  --text  'O LibreOffice foi atualizado com sucesso clique em OK para saír'
+                else
+                    xterm  -e "sudo bash /usr/bin/instalador-libreoffice.sh"	&&  zenity --info --title "Atualização" --width=200 --height=100  --text  'O LibreOffice foi atualizado com sucesso clique em OK para saír'
+                fi
        else
            exit 1
        fi
