@@ -49,7 +49,7 @@ case $? in
               FALSE http://mirror.nexcess.net/tdf "Mirror Nexcess"  \
               FALSE http://mirror.ufms.br/tdf "Mirror UFMS"  \
               FALSE http://tdf.ufes.br "Mirror UFES"  \
-              FALSE 192.168.0.187/tdf  "Servidor Local" )
+              FALSE 192.168.0.11/tdf  "Servidor Local" )
 
             if [ $? == 0 ]; then       
 
@@ -59,7 +59,7 @@ case $? in
                     diretorio=RPMS
                   else  
                     gerenciadorPacote=deb
-                    diretorio=DEBS
+                    diretorio=DEBS]
                 fi
 #4              Testando  Arquitetura do desktop"
                 if [ `getconf LONG_BIT` = "64" ]
@@ -172,7 +172,7 @@ case $? in
 
 
                                             else
-                                                echo "gernciador não encontrado"  
+                                                echo "gerenciador não encontrado"  
                                             fi
                                       else
                                           echo "notify-send já instalado"      
@@ -181,7 +181,7 @@ case $? in
                                            
 #5.2.2                                 Checando se o curl já está instalando          
 				     
-				      if ! [ -e /usr/bin/curl  ]; then
+                        				      if ! [ -e /usr/bin/curl  ]; then
                                           
                                             if [ -e /usr/bin/dnf  ]; then
                                                 sudo -S  dnf install curl -y
@@ -202,7 +202,31 @@ case $? in
                                       else
                                           echo "curl já instalado"      
 
-                                      fi       
+                                      fi
+
+#5.2.3                                 Checando se o Xterm já está instalando          
+                                      if ! [ -e /usr/bin/xterm  ]; then
+                                          
+                                            if [ -e /usr/bin/dnf  ]; then
+                                                sudo -S  dnf install xterm -y
+
+                                            elif [ -e /usr/bin/zypper  ]; then
+                                                sudo -S  zypper -n install xterm
+                                                                    
+                                            elif [ -e /usr/bin/zypper ]; then
+                                                sudo -S zypper -n install xterm
+
+                                            elif [ -e /usr/bin/dpkg  ]; then
+                                                sudo -S  apt-get install xterm
+
+
+                                            else
+                                                echo "gerenciador não encontrado"  
+                                            fi
+                                      else
+                                          echo "xterm já instalado"      
+
+                                      fi        
                       
                                       echo "5" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
