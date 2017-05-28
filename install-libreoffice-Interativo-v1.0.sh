@@ -10,6 +10,29 @@
 exec >& >(tee -a /tmp/$(date +"%d-%m-%y"--%Hhoras:%mmin:%Sseg)-install-libreoffice.log)
 export PATH="/usr/local/sbin:/usr/sbin:/sbin:/bin:/usr/games:/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games"
 
+		if ! [ -e /usr/bin/zenity  ]; then
+		    
+		      if [ -e /usr/bin/dnf  ]; then
+		          sudo -S  dnf install zenity -y
+
+		      elif [ -e /usr/bin/zypper  ]; then
+		          sudo -S  zypper -n install zenity
+		                              
+		      elif [ -e /usr/bin/zypper ]; then
+		          sudo -S zypper -n install zenity
+
+		      elif [ -e /usr/bin/dpkg  ]; then
+		          sudo -S  apt-get install  zenity -y
+
+
+		      else
+		          echo "gerenciador não encontrado"  
+		      fi
+		else
+		    echo "zenity já instalado"      
+
+		fi
+		
 
 
           if [ -e /usr/bin/dnf  ]; then
