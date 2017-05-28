@@ -53,6 +53,11 @@ if [ "$value" -gt "$value2" ];
                             if   [ -e /usr/bin/rpm ]; then
                                     gerenciadorPacote=rpm
                                     diretorio=RPMS
+				
+                            if   [ -e /bin/rpm ]; then
+                                    gerenciadorPacote=rpm
+                                    diretorio=RPMS
+				    
                             else  
                                     gerenciadorPacote=deb
                                     diretorio=DEBS
