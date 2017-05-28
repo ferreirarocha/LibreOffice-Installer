@@ -185,13 +185,11 @@ if [ "$value" -gt "$value2" ];
                                                                       sudo -S  yum remove openoffice[0-9]* libreoffice[0-9]* -y
 
                                                                      elif [ -e /usr/bin/zypper  ]; then
-                                                                      sudo -S  zypper -n remove libreoffice[0-9]*
+                                                                      sudo -S  zypper -n remove libreoffice*
+								      sudo -S zypper -n remove openoffice*
                                                                     
-                                                                    elif [ -e /usr/bin/zypper ]; then
-                                                                      sudo -S zypper -n remove openoffice[0-0]*
-
                                                                      elif [ -e /usr/bin/dpkg  ]; then
-                                                                     sudo -S  apt-get remove --purge libreoffice[0-9]* -y  
+                                                                      sudo -S  apt-get remove --purge libreoffice[0-9]* -y  
 
                                                                     else
                                                                         exit 1  
