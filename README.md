@@ -1,6 +1,10 @@
-[Baixar](https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/libreofficeInstaller.sh)
+[Baixar]
 
+`wget https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/libreofficeInstaller.sh`
 
+`chmod +x libreofficeInstaller.sh`
+
+`./libreofficeInstaller.sh`
 
 # LibreOffice Installer
 
