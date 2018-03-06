@@ -1,9 +1,13 @@
-# install-libreoffice
+[Baixar](https://raw.githubusercontent.com/ferreirarocha/install-libreoffice/master/libreofficeInstaller.sh)
 
-Estes scripts baixam e instalam o LibreOffice Estável ou Novo, também conhecidos como Still e Fresh diretamente dos repositórios oficiais.
+
+
+# LibreOffice Installer
+
+Este script baixa e instala o LibreOffice Estável e Novo, também conhecidos como Still e Fresh diretamente dos repositórios oficiais.
 
 ## O que o script faz
-Identifica automaticamente,  Arquitetura do Desktop, Gerenciador de Pacotes e as peculiaridades do instalador das distribuições da Familia Suse e Red Hat e Debian like.
+Identifica automaticamente a arquitetura do siatema, gerenciador de pacotes e as peculiaridades do instalador das distribuições Suse , Red Hat e Debian like, garantindo uma instalação user amigável ao usuário.
 
 
 ## Lista de Servidores Espelhos
@@ -12,9 +16,11 @@ Identifica automaticamente,  Arquitetura do Desktop, Gerenciador de Pacotes e as
 
 
 ## Versões do Script
+### Interativa
 A versão Interativa é indicada para instalações corriqueiras,
 
-A Automática é indicada para instalações em massa, como ambiente empresariais ou quando surgir a necessidade de instalar  o LibreOffice em dois computadores simultâneamente.
+### LibreOffice Pull Installer 
+E indicada para instalações em massa, como ambiente empresariais ou quando surgir a necessidade de instalar  o LibreOffice em dois computadores simultâneamente.
 
 
 ## Baixando o LibreOffice por Servidor Local
