@@ -42,25 +42,24 @@ E indicada para instalações em massa, como ambiente empresariais ou quando sur
 
 ### Baixando o LibreOffice por Servidor Local
 
-Os dois scripts, contam com a possibilidade de baixar o LibreOffice de um servidor local, isso aumenta a peformance da rede e diminui drasticamente o tempo de instalação.
+Os dois scripts, contam com a possibilidade de baixar o LibreOffice de um servidor local, diminuindo a quantidade de  downloads de versões já baixadas, reduzndo também o tempo de instalação.
 
-###  Testado em
+### O  Script foi testado nas seguintes distribuições.
 
-OpenSuse 32 e 64 Bits
+- [x] OpenSuse 32 e 64 Bits
+- [x] Fedora 32 e 64 Bits
 
-Fedora 32 e 64 Bits
+- [x] Debian 32 e 64 Bits
 
-Debian 32 e 64 Bits
+- [x] Ubuntu 32 e 64 Bits
 
-Ubuntu 32 e 64 Bits
+- [x] Lubuntu 32 e 64 Bits
 
-Lubuntu 32 e 64 Bits
+- [x] Xubuntu 32 e 64 Bits
 
-Xubuntu 32 e 64 Bits
+- [x] Linux Mint 32 e 64 Bits
 
-Linux Mint 32 e 64 Bits
-
-Linux Deepin 32 e 64 Bits
+- [x] Linux Deepin 32 e 64 Bits
 
 ### Sobre o criador do script
 
