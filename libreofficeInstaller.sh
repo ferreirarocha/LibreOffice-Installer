@@ -166,7 +166,7 @@ case $? in
                                       echo "1" ; sleep 1
                                       echo "# Criando diretórios" ; sleep 1
 #5.2                                  # Passa a senha
-                                      echo $senha | sudo -S -u root zenity --info  --width=300 --height=60 --text "Iniciando instalação\nSalve os trabalhos aberto no libreoffice e clique em OK" 
+                                      echo $senha | sudo -S -u root zenity --info  --width=300 --height=60 --text "Iniciando instalação\nSalve os trabalhos abertos no libreoffice e clique em OK" 
                                       
                                       if ! [ -e /usr/bin/notify-send  ]; then
                                           
