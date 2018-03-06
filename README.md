@@ -75,6 +75,7 @@ Escreve no blog [http://alfabech.com](http://alfabech.com/)
 pode ser contactado no telegram por
 
 <https://telegram.me/ferreirarocha>
+https://ferreirarocha.github.io/install-libreoffice/
 
 ### Sobre o LibreOffice
 
